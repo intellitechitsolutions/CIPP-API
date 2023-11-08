@@ -22,7 +22,7 @@ try {
         } | ConvertTo-Json
         $Table = Get-CippTable -tablename 'templates'
         $Table.Force = $true
-        Add-AzDataTableEntity @Table -Entity @{
+        Add-CIPPAzDataTableEntity @Table -Entity @{
             JSON         = "$object"
             RowKey       = "$GUID"
             PartitionKey = "IntuneTemplate"
@@ -39,7 +39,7 @@ try {
 
             "configurationPolicies" {
                 $Type = "Catalog"
-                $Template = New-GraphGetRequest -uri "https://graph.microsoft.com/beta/deviceManagement/$($urlname)('$($ID)')?`$expand=settings" -tenantid $tenantfilter | Select-Object name, description, settings, platforms, technologies
+                $Template = New-GraphGetRequest -uri "https://graph.microsoft.com/beta/deviceManagement/$($urlname)('$($ID)')?`$expand=settings" -tenantid $tenantfilter | Select-Object name, description, settings, platforms, technologies, templateReference
                 $TemplateJson = $Template | ConvertTo-Json -Depth 10
                 $DisplayName = $template.name
 
@@ -99,7 +99,7 @@ try {
         } | ConvertTo-Json
         $Table = Get-CippTable -tablename 'templates'
         $Table.Force = $true
-        Add-AzDataTableEntity @Table -Entity @{
+        Add-CIPPAzDataTableEntity @Table -Entity @{
             JSON         = "$object"
             RowKey       = "$GUID"
             PartitionKey = "IntuneTemplate"
